@@ -169,18 +169,3 @@ src/
 ```
 
 ---
-
-## Test results
-
-```
-ctest 2/2 passed
-  crypto_isa_test:  9/9  — AVX-512+VAES confirmed, GCM-by32
-  logic_test:      40/40 — session, AppID, FIB, WAN, NAT, BFD, crypto
-```
-
-### Bug caught by tests
-
-`nos_select_wan_path()` initialised `best=0` without checking if circuit 0
-was active. On failover, VoIP traffic could be pinned to a downed circuit
-whose stale RTT still won all comparisons. Fixed: scan for first active
-circuit as baseline before the selection loop.
